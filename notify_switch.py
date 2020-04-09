@@ -93,8 +93,8 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Status of Switch at Best Buy')
-    parser.add_argument('sender_email', metavar='sender_email', type=str, help="Email of sender")
-    parser.add_argument('sender_password', metavar='sender_password', type=str, help="Password of sender")
-    parser.add_argument('receiver_email', metavar='receiver_email', type=str, nargs='+', help="Email of receiver")
+    parser.add_argument('sender_email', type=str, help='Email of sender', action='store')
+    parser.add_argument('sender_password', type=str, help='Password of sender', action='store')
+    parser.add_argument('receiver_email', type=str, help='Email of receiver', action='store')
     args = parser.parse_args()
     main(args)
