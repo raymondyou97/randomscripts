@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import requests
 import time
 import json
+import smtplib
+import ssl
+import argparse
 
 initial_url = 'https://www.bestbuy.com/site/nintendo-switch-32gb-console-neon-red-neon-blue-joy-con/6364255.p?skuId=6364255'
 post_url = 'https://www.bestbuy.com/cart/api/v1/addToCart'
@@ -53,10 +56,28 @@ def add_to_cart():
     else:
         print("Failed to add item to cart.")
         return False
-    
+
+def send_email(args):
+    port = 465  # For SSL
+    smtp_server = 'smtp.gmail.com'
+    sender_email = args.sender_email
+    password = args.sender_password
+    receiver_email = args.receiver_email
+    message = """\
+    Subject: SWITCH IS AVAILABLE
+
+    HERE: {}""".format(initial_url)
+
+    # Create a secure SSL context
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        print(f'SENDING NOTIFICATION EMAIL TO {args.receiver_email}')
+        server.sendmail(sender_email, receiver_email, message)
+
 # notifys you if best buy has the red/blue switch in stock
-def main():
-    print("START SCRIPT\n")
+def main(args):
+    print('START SCRIPT\n')
 
     while True:
         check_availability()
@@ -64,10 +85,16 @@ def main():
         if success:
             break
         else:
-            print("Overall attempt failed. Restarting.")
+            print('Overall attempt failed. Restarting.')
 
-    print("\nABLE TO ADD ITEM TO CART GOGO")
+    send_email(args)
 
+    print('DONE END SCRIPT')
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='Status of Switch at Best Buy')
+    parser.add_argument('sender_email', metavar='sender_email', type=str, help="Email of sender")
+    parser.add_argument('sender_password', metavar='sender_password', type=str, help="Password of sender")
+    parser.add_argument('receiver_email', metavar='receiver_email', type=str, nargs='+', help="Email of receiver")
+    args = parser.parse_args()
+    main(args)
