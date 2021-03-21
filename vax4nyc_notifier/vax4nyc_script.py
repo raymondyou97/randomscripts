@@ -51,7 +51,7 @@ def _check_if_desired_loc(resp, desired_loc):
     for l in locs:
         center_name = l["lstDataWrapper"][0]["centerName"].lower()
         all_locs.append(center_name)
-    #print(all_locs)
+    print("found", all_locs)
     desired_loc = desired_loc.lower()
     return True in [True for l in all_locs if desired_loc in l]
 
