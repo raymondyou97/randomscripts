@@ -66,8 +66,8 @@ def main():
     retry_secs = 5
     while True:
         resp = _get_appointments()
-        # the specific location you want
-        found = _check_if_desired_loc(resp, "Bathgate Contract Postal")
+        # the specific location you want.
+        found = _check_if_desired_loc(resp, "Army Terminal")
         if found:
             print("found, playing lion roar")
             playsound('audio.mp3')
