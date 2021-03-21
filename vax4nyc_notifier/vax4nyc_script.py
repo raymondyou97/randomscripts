@@ -3,7 +3,7 @@
 """
 Notifies you if there is a covid vaccine appointment available by reverse engineering the vax4nyc endpoint which grabs all the covid appointments available
 Have the site ready to immediately click and grab the time slot
-You'll need to add the $cookie from the vax4nyc site
+You'll need to add the $cookie from the vax4nyc site and pip install playsound
 """
 
 import requests
