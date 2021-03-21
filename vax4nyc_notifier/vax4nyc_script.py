@@ -55,10 +55,6 @@ def _check_if_desired_loc(resp, desired_loc):
     desired_loc = desired_loc.lower()
     return True in [True for l in all_locs if desired_loc in l]
 
-def _notify(found):
-    if found:
-        playsound('audio.mp3')
-
 def main():
     if not headers['$cookie']:
         raise Exception("MISSING COOKIE")
